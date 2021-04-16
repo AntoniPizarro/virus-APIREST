@@ -1,18 +1,26 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 
+from services.db import data_base as db
+from services.db_engine import init_app
+
 DB = "virus"
 HOST = "mongodb+srv://m001-student:m001-mongodb-basics@sandbox.4uubd.mongodb.net/" + DB + "?retryWrites=true&w=majority"
 
 app = Flask(__name__)
 CORS(app)
+init_app(app, DB, HOST)
 
 
 # GET
 
 @app.route("/", methods=["GET"])
 def ping():
-    return jsonify({"virus" : "game"})
+    return db.ping()
+
+@app.route("/cards", methods=["GET"])
+def get_cards():
+    return db.get_cards(DB, HOST)
 
 @app.route("/<string:user>/", methods=["GET"])
 def get_user(user):
