@@ -1,11 +1,6 @@
-import click
-from mongoengine import *
-from flask.cli import with_appcontext
-from flask import g
+import random
 
-from repository.models import Cards, User_list
-
-cards = [
+cards_test = [
     {"name": "corazón", "type" : "organ", "color" : "red"},
     {"name": "corazón", "type" : "organ", "color" : "red"},
     {"name": "corazón", "type" : "organ", "color" : "red"},
@@ -95,44 +90,59 @@ cards = [
     {"name" : "cambio de cuerpo", "type" : "medicine", "color" : "body_change"}
 ]
 
-def get_db(db_name, host_url):
+class Deck:
     '''
-    Se conecta a una base de datos y la devuelve al objeto grlobal g de Flask
+    'Crea una baraja y su gestión'
     '''
-    if "db" not in g:
-        g.db = connect(
-            db=db_name,
-            host=host_url,
-        )
-        g.cards = Cards
-        g.user_list = User_list
-    return g.db
 
-def close_db(e=None):
-    db = g.pop("db", None)
-    if db is not None:
-        db.close()
+    def __init__(self, cards_available):
+        self.cards_available = cards_available
+    
+    def get_cards_available(self):
+        '''
+        'Devuelve las cartas disponibles en la baraja'
+        '''
+        return self.cards_available
 
+    def add_card_available(self, card):
+        '''
+        'Añade una carta a la baraja'
+        '''
+        self.cards_available.append(card)
 
-def init_db(db_name, host_url):
-    db = get_db(db_name, host_url)
-    for card in cards:
-        print(card)
-        Cards(
-            name=card["name"], type=card["type"], color=card["color"]
-        ).save()
+    def init_mallet(self):
+        '''
+        'Devuelve un mazo eliminando las cartas escogidas'
+        'de la baraja'
+        '''
+        cards_asociated = []
+        cards = self.cards_available
+        
+        for i in range(3):
+            if len(cards) > 2:
+                ran = random.randrange(1, len(cards))
+                card = cards[ran]
+                cards_asociated.append(card)
+                cards.remove(card)
+        
+        return cards_asociated
+    
+    def discard_cards(self, player_mallet, cards_discarted):
+        '''
+        'Recoge un mazo y le quita las cartas descartadas, añadiéndolas a la baraja'
+        '''
+        discard_cards_num = len(cards_discarted)
+        
+        for card in cards_discarted:
+            player_mallet.remove(card)
+            self.add_card_available(card)
+        
+        cards = self.get_cards_available()
+        
+        for i in range(discard_cards_num):
+            ran = random.randrange(1, len(cards))
+            card = cards[ran]
+            player_mallet.append(card)
+            cards.remove(card)
 
-@click.command("init-db")
-@click.argument('db', nargs=1)
-@click.argument('host', nargs=-1)
-@with_appcontext
-def init_db_command(db, host):
-    db_name = db
-    host_url = host
-    init_db(db_name, host_url)
-    click.echo("Data Base initialized")
-
-
-def init_app(app, db_name, host_url):
-    app.teardown_appcontext(close_db)
-    app.cli.add_command(init_db_command)
+        return player_mallet
