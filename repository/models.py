@@ -15,4 +15,4 @@ class User_list(Document):
     body = DictField(required=True)
 
     def to_json(self):
-        return {"name": self.name, "type": self.type, "color": self.color}
+        return {"name": self.name, "deck": self.deck, "body": self.body}
