@@ -48,9 +48,14 @@ class Rules:
     
     @staticmethod
     def change_organ(body_A, body_b, organ_A, organ_B):
-        comodin = organ_A
-        for organ_body_A in body_A["organs"]:
-            if organ_body_A["organ"] == organ_A:
-                for organ_body_B in body_b["organs"]:
-                    if organ_body_B["organ"] == organ_B:
-                        organ_body_B["organ"] = comodin
+        '''
+        organ_X = {
+            "organ" = {},
+            "effect" = {},
+            "inmune" = False
+        }
+        '''
+        comodin = organ_B
+        for organ in body_A:
+            if organ == organ_A:
+                organ = comodin
