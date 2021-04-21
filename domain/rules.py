@@ -47,15 +47,15 @@ class Rules:
         return [new_player_A, new_player_B]
     
     @staticmethod
-    def change_organ(body_A, body_b, organ_A, organ_B):
+    def change_organ(body_A, body_B, organ_A, organ_B):
         '''
-        organ_X = {
-            "organ" = {},
-            "effect" = {},
-            "inmune" = False
-        }
+        Intercambia un órgano entre dos cuerpos
         '''
-        comodin = organ_B
-        for organ in body_A:
-            if organ == organ_A:
-                organ = comodin
+        for organ in body_A["organs"]:
+            if body_A["organs"][organ] == organ_A:
+                body_A["organs"][organ] = organ_B
+        for organ in body_B["organs"]:
+            if body_B["organs"][organ] == organ_B:
+                body_B["organs"][organ] = organ_A
+        
+        return [body_A, body_B]
