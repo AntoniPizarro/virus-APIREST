@@ -94,8 +94,58 @@ def test_change_organ():
     organ_A = "organo 1 A"
     organ_B = "organo 3 B"
 
-    body_A = Rules().change_organ(body_A, body_B, organ_A, organ_B)[0]
-    body_B = Rules().change_organ(body_A, body_B, organ_A, organ_B)[1]
+    new_body_A = Rules().change_organ(body_A, body_B, organ_A, organ_B)[0]
+    new_body_B = Rules().change_organ(body_A, body_B, organ_A, organ_B)[1]
 
-    assert organ_A == body_B["organs"]["organ3"]
-    assert organ_B == body_A["organs"]["organ1"]
+    assert organ_A == new_body_B["organs"]["organ3"]
+    assert organ_B == new_body_A["organs"]["organ1"]
+
+@pytest.mark.rules
+def test_stole_organ():
+    body_A = {
+        "organs" : {
+            "organ1" : {
+                "organ" : {},
+                "effect" : {},
+                "inmune" : False
+            },
+            "organ2" : {
+                "organ" : {},
+                "effect" : {},
+                "inmune" : False
+            },
+            "organ3" : {
+                "organ" : {},
+                "effect" : {},
+                "inmune" : False
+            }
+        }
+    }
+    organ = {
+        "organ" : {"name": "corazón", "type" : "organ", "color" : "red"},
+        "effect" : {"name" : "medicamento de corazón", "type" : "medicine", "color" : "red"},
+        "inmune" : False
+    }
+    body_B = {
+        "organs" : {
+            "organ1" : {
+                "organ" : {},
+                "effect" : {},
+                "inmune" : False
+            },
+            # Organo para robar
+            "organ2" : organ,
+
+            "organ3" : {
+                "organ" : {},
+                "effect" : {},
+                "inmune" : False
+            }
+        }
+    }
+
+    new_body_A = Rules().stole_organ(body_A, body_B, organ)[0]
+    new_body_B = Rules().stole_organ(body_A, body_B, organ)[1]
+
+    assert new_body_A["organs"]["organ1"] == organ
+    assert new_body_B["organs"]["organ2"] != organ
