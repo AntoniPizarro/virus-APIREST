@@ -74,3 +74,28 @@ def test_change_body():
 
     assert player_A["body"] == Rules().change_body(player_A, player_B)[1]["body"]
     assert player_B["body"] == Rules().change_body(player_A, player_B)[0]["body"]
+
+@pytest.mark.rules
+def test_change_organ():
+    body_A = {
+        "organs" : {
+            "organ1" : "organo 1 A",
+            "organ2" : "organo 2 A",
+            "organ3" : "organo 3 A"
+        }
+    }
+    body_B = {
+        "organs" : {
+            "organ1" : "organo 1 B",
+            "organ2" : "organo 2 B",
+            "organ3" : "organo 3 B"
+        }
+    }
+    organ_A = "organo 1 A"
+    organ_B = "organo 3 B"
+
+    body_A = Rules().change_organ(body_A, body_B, organ_A, organ_B)[0]
+    body_B = Rules().change_organ(body_A, body_B, organ_A, organ_B)[1]
+
+    assert organ_A == body_B["organs"]["organ3"]
+    assert organ_B == body_A["organs"]["organ1"]
