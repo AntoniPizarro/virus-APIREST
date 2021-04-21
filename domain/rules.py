@@ -59,3 +59,23 @@ class Rules:
                 body_B["organs"][organ] = organ_A
         
         return [body_A, body_B]
+
+    @staticmethod
+    def stole_organ(body_A, body_B, organ_to_stole):
+        '''
+        Roba un órgano de otro cuerpo
+        '''
+        template = {
+            "organ" : {},
+            "effect" : {},
+            "inmune" : False
+        }
+        
+        for organ in body_B["organs"]:
+            if body_B["organs"][organ] == organ_to_stole:
+                body_B["organs"][organ] = template
+        for organ in body_A["organs"]:
+            if body_A["organs"][organ] == template:
+                body_A["organs"][organ] = organ_to_stole
+        
+        return [body_A, body_B]
