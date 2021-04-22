@@ -100,3 +100,22 @@ class Rules:
             new_players.append(player)
         
         return new_players
+    
+    @staticmethod
+    def infect(virus, organs_to_infect):
+        '''
+        "organ1" : {
+            "organ" : {"name" : "virus de corazón", "type" : "virus", "color" : "red"},
+            "effect" : {},
+            "inmune" : False
+        }
+        '''
+        for org in organs_to_infect:
+            for organ in org:
+                for vir in virus:
+                    if (org[organ]["organ"]["color"] == "multicolor" or org[organ]["organ"]["color"] == vir["color"] or vir["color"] == "multicolor") and org[organ]["effect"] == {}:
+                        org[organ]["effect"] = vir
+                        break
+        
+        organs_infected = organs_to_infect
+        return organs_infected
