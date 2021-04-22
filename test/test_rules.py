@@ -215,3 +215,77 @@ def test_drop_mallets():
     assert players[0] != player_1
     assert players[1] != player_2
     assert players[2] != player_3
+
+@pytest.mark.rules
+def test_infect():
+    virus_list = [
+        {"name" : "virus de corazón", "type" : "virus", "color" : "red"},
+        {"name": "virus de cerebro", "type" : "virus", "color" : "blue"},
+        {"name": "virus de cerebro", "type" : "virus", "color" : "multicolor"}
+    ]
+
+    organs_to_infect = [
+        {"organ" : {
+            "organ" : {"name": "corazón", "type" : "organ", "color" : "red"},
+            "effect" : {},
+            "inmune" : False
+        }},
+        {"organ" : {
+            "organ" : {"name" : "comodín", "type" : "organ", "color" : "multicolor"},
+            "effect" : {},
+            "inmune" : False
+        }},
+        {"organ" : {
+            "organ" : {"name": "corazón", "type" : "organ", "color" : "red"},
+            "effect" : {"name" : "medicamento de corazón", "type" : "medicine", "color" : "red"},
+            "inmune" : False
+        }},
+        {"organ" : {
+            "organ" : {"name" : "cerebro", "type" : "organ", "color" : "blue"},
+            "effect" : {},
+            "inmune" : False
+        }}
+    ]
+
+    organ_1 = {
+        "organ" : {"name": "corazón", "type" : "organ", "color" : "red"},
+        "effect" : {"name" : "virus de corazón", "type" : "virus", "color" : "red"},
+        "inmune" : False
+    }
+    organ_2 = {
+        "organ" : {"name" : "comodín", "type" : "organ", "color" : "multicolor"},
+        "effect" : {"name": "virus de cerebro", "type" : "virus", "color" : "blue"},
+        "inmune" : False
+    }
+    organ_3 = {
+        "organ" : {"name": "corazón", "type" : "organ", "color" : "red"},
+        "effect" : {"name" : "medicamento de corazón", "type" : "medicine", "color" : "red"},
+        "inmune" : False
+    }
+    organ_4 = {
+        "organ" : {"name" : "cerebro", "type" : "organ", "color" : "blue"},
+        "effect" : {"name": "virus de cerebro", "type" : "virus", "color" : "multicolor"},
+        "inmune" : False
+    }
+
+    infection = Rules().infect(virus_list, organs_to_infect)
+
+    # Los prints muestran que funciona según las reglas,
+    # pero falta tener en cuenta el orden de los diccionarios
+    print(organ_1)
+    print(infection[0]["organ"])
+    print("=========================================================")
+    print(organ_2)
+    print(infection[1]["organ"])
+    print("=========================================================")
+    print(organ_3)
+    print(infection[2]["organ"])
+    print("=========================================================")
+    print(organ_4)
+    print(infection[3]["organ"])
+    print("=========================================================")
+
+    assert organ_1 == infection[0]["organ"]
+    assert organ_2 == infection[1]["organ"]
+    assert organ_3 == infection[2]["organ"]
+    assert organ_4 == infection[3]["organ"]
