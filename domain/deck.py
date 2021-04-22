@@ -96,6 +96,9 @@ class Deck:
     '''
 
     def __init__(self, cards_available):
+        '''
+        'Constructor de barajas
+        '''
         self.cards_available = cards_available
     
     def get_cards_available(self):
