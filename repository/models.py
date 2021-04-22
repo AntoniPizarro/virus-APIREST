@@ -19,33 +19,45 @@ class User_list(Document):
         return {"id" : self.id, "name": self.name, "mallet": self.mallet, "body": self.body}
 
 '''
+Definiendo estructura de cada usuario
+
+{
+    "id" : "...",
+    "name" : "...",
+    "mallet" : [...],
+    "body" : {...}
+}
+
+Cada mallet tendra una lista de cartas en la mano
+
+
 Definiendo estructura del body de cada usuario
 
 {
     "organs" : {
         "organ1" : {
-            "organ" : {},
-            "effect" : {},
+            "organ" : {...},
+            "effect" : {...},
             "inmune" : False/True
         },
         "organ2" : {
-            "organ" : {},
-            "effect" : {},
+            "organ" : {...},
+            "effect" : {...},
             "inmune" : False/True
         },
         "organ3" : {
-            "organ" : {},
-            "effect" : {},
+            "organ" : {...},
+            "effect" : {...},
             "inmune" : False/True
         },
         "organ4" : {
-            "organ" : {},
-            "effect" : {},
+            "organ" : {...},
+            "effect" : {...},
             "inmune" : False/True
         },
         "organ5" : {
-            "organ" : {},
-            "effect" : {},
+            "organ" : {...},
+            "effect" : {...},
             "inmune" : False/True
         }
     }
