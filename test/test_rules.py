@@ -1,5 +1,6 @@
 import pytest
 from domain.rules import Rules
+from domain.deck import Deck
 
 @pytest.mark.rules
 def test_check_body_infected():
@@ -149,3 +150,68 @@ def test_stole_organ():
 
     assert new_body_A["organs"]["organ1"] == organ
     assert new_body_B["organs"]["organ2"] != organ
+
+@pytest.mark.rules
+def test_drop_mallets():
+    players = [
+        {
+            "id" : "1111",
+            "name" : "Player 1",
+            "mallet" : ["carta_1_P1", "carta_2_P1", "carta_3_P1"],
+            "body" : {},
+        },
+        {
+            "id" : "2222",
+            "name" : "Player 2",
+            "mallet" : ["carta_1_P2", "carta_2_P2", "carta_3_P2"],
+            "body" : {},
+        },
+        {
+            "id" : "3333",
+            "name" : "Player 3",
+            "mallet" : ["carta_1_P3", "carta_2_P3", "carta_3_P3"],
+            "body" : {},
+        }
+    ]
+    test_deck = [
+        "Platano",
+        "Pera",
+        "Naranja",
+        "Manzana",
+        "Aguacate",
+        "Piña",
+        "Pomelo",
+        "Cereza",
+        "Kiwi",
+        "Maracuyá",
+        "Mandarina",
+        "Papaya"
+    ]
+
+    deck = Deck(test_deck[:])
+    
+    player_1 = {
+        "id" : "1111",
+        "name" : "Player 1",
+        "mallet" : ["carta_1_P1", "carta_2_P1", "carta_3_P1"],
+        "body" : {},
+    }
+    player_2 = {
+        "id" : "2222",
+        "name" : "Player 2",
+        "mallet" : ["carta_1_P2", "carta_2_P2", "carta_3_P2"],
+        "body" : {},
+    }
+    player_3 = {
+        "id" : "3333",
+        "name" : "Player 3",
+        "mallet" : ["carta_1_P3", "carta_2_P3", "carta_3_P3"],
+        "body" : {},
+    }
+
+    new_players = Rules().drop_mallets([player_1, player_2, player_3], deck.get_cards_available())
+    new_players.clear()
+
+    assert players[0] != player_1
+    assert players[1] != player_2
+    assert players[2] != player_3
