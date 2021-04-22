@@ -1,3 +1,5 @@
+from domain.deck import Deck
+
 class Rules:
 
     @staticmethod
@@ -79,3 +81,22 @@ class Rules:
                 body_A["organs"][organ] = organ_to_stole
         
         return [body_A, body_B]
+
+    @staticmethod
+    def drop_mallets(players, deck):
+        '''
+        'Vacía los mazos de los jugadores indicados
+        '''
+        
+        new_deck = Deck(deck)
+        new_players = []
+        
+        for player in players:
+            cards_to_drop = []
+            for card in player["mallet"]:
+                cards_to_drop.append(card)
+            
+            player["mallet"] = new_deck.discard_cards(player["mallet"], cards_to_drop)
+            new_players.append(player)
+        
+        return new_players
