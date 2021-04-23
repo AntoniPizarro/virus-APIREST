@@ -115,6 +115,7 @@ class Rules:
                 for vir in virus:
                     if (org[organ]["organ"]["color"] == "multicolor" or org[organ]["organ"]["color"] == vir["color"] or vir["color"] == "multicolor") and org[organ]["effect"] == {}:
                         org[organ]["effect"] = vir
+                        virus.remove(vir)
                         break
         
         organs_infected = organs_to_infect
