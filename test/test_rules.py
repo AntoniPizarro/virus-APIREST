@@ -270,21 +270,6 @@ def test_infect():
 
     infection = Rules().infect(virus_list, organs_to_infect)
 
-    # Los prints muestran que funciona según las reglas,
-    # pero falta tener en cuenta el orden de los diccionarios
-    print(organ_1)
-    print(infection[0]["organ"])
-    print("=========================================================")
-    print(organ_2)
-    print(infection[1]["organ"])
-    print("=========================================================")
-    print(organ_3)
-    print(infection[2]["organ"])
-    print("=========================================================")
-    print(organ_4)
-    print(infection[3]["organ"])
-    print("=========================================================")
-
     assert organ_1 == infection[0]["organ"]
     assert organ_2 == infection[1]["organ"]
     assert organ_3 == infection[2]["organ"]
