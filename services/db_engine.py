@@ -3,7 +3,7 @@ from mongoengine import *
 from flask.cli import with_appcontext
 from flask import g
 
-from repository.models import Cards, User_list
+from repository.models import Cards, Users
 
 cards = [
     {"name": "corazón", "type" : "organ", "color" : "red"},
@@ -104,8 +104,8 @@ def get_db(db_name, host_url):
             db=db_name,
             host=host_url,
         )
-        g.cards = Cards
-        g.user_list = User_list
+        g.Cards = Cards
+        g.Users = Users
     return g.db
 
 def close_db(e=None):
