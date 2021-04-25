@@ -9,20 +9,20 @@ class Cards(Document):
     def to_json(self):
         return {"name": self.name, "type": self.type, "color": self.color}
 
-class User_list(Document):
-    id = StringField(required=True)
+class Users(Document):
+    code = StringField(required=True)
     name = StringField(required=True)
     mallet = ListField(required=True)
     body = DictField(required=True)
 
     def to_json(self):
-        return {"id" : self.id, "name": self.name, "mallet": self.mallet, "body": self.body}
+        return {"code" : self.code, "name": self.name, "mallet": self.mallet, "body": self.body}
 
 '''
 Definiendo estructura de cada usuario
 
 {
-    "id" : "...",
+    "code" : "...",
     "name" : "...",
     "mallet" : [...],
     "body" : {...}
